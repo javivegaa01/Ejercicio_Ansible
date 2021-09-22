@@ -16,10 +16,10 @@
         dest: /home/usuario/Descargas
       #Descomprimir archivo
     - name: Descomprimiendo archivo.
-      unarchive:
-        src: wordpress-5.8.1.zip
-        dest: /home/usuario/Escritorio
-        remote_src: yes.
+      ansible.builtin.unarchive:
+        src: /home/usuario/Descargas/wordpress-5.8.1.zip
+        dest: /home/usuario
+        remote_src: yes
       # Actualizamos los paquetes apt update;apt upgrade
     #- name: "Actualizamos el sistema"
     #  apt: update_cache=yes upgrade=yes
