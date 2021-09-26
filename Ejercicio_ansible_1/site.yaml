@@ -40,23 +40,14 @@
         password: 'jaQIrJHXk0jzA'
         priv: '*.*:ALL,GRANT'
         state: present
+        #Clonar repositorio git
     - name: "Instalar paquete git"
       apt:
         name: git
-    
-      # Actualizamos los paquetes apt update;apt upgrade
-    #- name: "Actualizamos el sistema"
-    #  apt: update_cache=yes upgrade=yes
-      # instalar un paquete
-    #- name: "Instalar paquete git"
-    #  apt:
-    #    name: git
-      # Copia un fichero a la máquina remoto
-    #- name: "Copiar fichero al servidor remoto"
-    #  copy:
-    #    src: files/foo.conf
-    #    dest: /etc/foo.conf
-    #    owner: root
-    #    group: root
-    #    mode: '0644'
+    - name: "Clonar"
+      git:
+        repo: https://github.com/josedom24/ansible_ejemplos.git
+        dest: /home/javier/repo
+        version: origin
+
     
