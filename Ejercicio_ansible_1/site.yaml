@@ -1,0 +1,62 @@
+- hosts: servidores
+  become: true
+  tasks:
+      # Crear Usuario
+    - name: "Creando usuario"
+      user:
+        name: javier
+        password: $6$javier$MdZHUp2y6l5tGGc7qRG8w97kSr8QDc5f0/FpTEQ06qj93n0k6io1m46MGPP/VMVv1ZVwASjk.jNPL1/NcsCPk/
+        shell: /bin/bash
+        createhome: yes
+        home: /home/javier
+      #Descargar un fichero
+    - name: "Descargando fichero"
+      get_url:
+        url: "https://wordpress.org/latest.zip"
+        dest: /home/usuario
+      #Descomprimir archivo
+    - name: Descomprimiendo archivo.
+      ansible.builtin.unarchive:
+        src: /home/usuario/wordpress-5.8.1.zip
+        dest: /home/usuario
+        remote_src: yes
+      #Instalar mariadb
+    - name: "Actualizacion de paquetes"
+      apt: update_cache=yes upgrade=yes
+    - name: Instalando mariadb
+      apt:
+        pkg:
+          - mariadb-server
+          - python3-mysqldb
+      #Crear base de datos
+    - name: Creando base de datos'
+      community.mysql.mysql_db:
+        name: javier_wordpress
+        state: present
+      #Crear usuario base de datos
+    - name: 'Creando usuario'
+      community.mysql.mysql_user:
+        name: javier
+        password: 'jaQIrJHXk0jzA'
+        priv: '*.*:ALL,GRANT'
+        state: present
+    - name: "Instalar paquete git"
+      apt:
+        name: git
+    
+      # Actualizamos los paquetes apt update;apt upgrade
+    #- name: "Actualizamos el sistema"
+    #  apt: update_cache=yes upgrade=yes
+      # instalar un paquete
+    #- name: "Instalar paquete git"
+    #  apt:
+    #    name: git
+      # Copia un fichero a la máquina remoto
+    #- name: "Copiar fichero al servidor remoto"
+    #  copy:
+    #    src: files/foo.conf
+    #    dest: /etc/foo.conf
+    #    owner: root
+    #    group: root
+    #    mode: '0644'
+    
